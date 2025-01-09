@@ -57,22 +57,60 @@
         <img src="截屏2024-10-28 23.35.47.png" alt="Photo 6">
     </div>
 	
-	<!-- 添加 PDF 文件链接 -->
-    <div class="description3">
-        <p><a href="Engineering Camp Introduction.pdf" target="_blank">Download Engineering Camp Introduction (PDF)</a></p>
+	<!-- PDF Section -->
+        <div id="pdf-container" class="pdf-container">
+            <p class="loading">Loading PDF...</p>
+        </div>
     </div>
-    
-    <div class="videos">
-        <video autoplay loop muted>
-            <source src="sd1721752295_2.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-    </div>
-    
 
-    <!-- Final Description -->
-    <div class="description3">
-        <p>LV 2024</p>
-    </div>
+    <script>
+        const pdfUrl = 'Engineering Camp Introduction.pdf'; // 替换为您的 PDF 文件路径
+        const container = document.getElementById('pdf-container');
+        const loadingText = document.querySelector('.loading');
+
+        // 加载 PDF 文件
+        pdfjsLib.getDocument(pdfUrl).promise.then(function (pdf) {
+            loadingText.textContent = `Rendering page 1 of ${pdf.numPages}...`;
+
+            let currentPage = 1;
+
+            // 按顺序渲染页面的函数
+            const renderPage = (pageNum) => {
+                pdf.getPage(pageNum).then(function (page) {
+                    const viewport = page.getViewport({ scale: 1.0 });
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    canvas.width = viewport.width;
+                    canvas.height = viewport.height;
+
+                    const renderContext = {
+                        canvasContext: context,
+                        viewport: viewport,
+                    };
+
+                    page.render(renderContext).promise.then(function () {
+                        const img = document.createElement('img');
+                        img.src = canvas.toDataURL('image/png'); // 将 canvas 转为图片
+                        img.style.margin = "0.5mm 0"; // 设置图片上下间隔
+                        container.appendChild(img);
+
+                        // 加载下一页
+                        if (pageNum < pdf.numPages) {
+                            loadingText.textContent = `Rendering page ${pageNum + 1} of ${pdf.numPages}...`;
+                            renderPage(pageNum + 1);
+                        } else {
+                            loadingText.style.display = 'none'; // 所有页面加载完成后隐藏加载文字
+                        }
+                    });
+                });
+            };
+
+            // 从第一页开始渲染
+            renderPage(1);
+        }).catch(function (error) {
+            console.error('Error loading PDF:', error);
+            loadingText.textContent = 'Failed to load PDF.';
+        });
+    </script>
 </body>
 </html>
