@@ -1,0 +1,104 @@
+/* General Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Avenir Next', sans-serif;
+    background-color: #ffffff;
+}
+
+/* Back to Home Button */
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 1;
+    padding: 10px 20px;
+    color: #000000;
+    text-decoration: none;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.back-button:hover {
+    background-color: #ff007b;
+    color: #ffffff;
+}
+
+/* Main Description */
+.description {
+    margin: 20px auto;
+    max-width: 800px;
+    text-align: center;
+    color: #000000;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.description h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.description p {
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+/* Photos and Videos Section */
+.photos, .videos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 40px auto;
+    max-width: 1200px;
+}
+
+.photos img, .videos video {
+    width: 45%;
+    margin: 10px;
+    border-radius: 8px;
+    height: auto;
+    border: 2px solid #ccc; /* Add border to images and videos */
+    box-sizing: border-box; /* Include border in width calculation */
+}
+
+.photos img {
+    object-fit: cover;
+}
+
+.videos video {
+    object-fit: cover;
+}
+
+/* Description Below Photos and Videos */
+.description2, .description3 {
+    max-width: 800px;
+    margin: 0 auto 40px auto;
+    text-align: center;
+    color: #000000;
+    font-size: 18px;
+    padding: 0 20px;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 767px) {
+    .description h1 {
+        font-size: 32px;
+    }
+
+    .description p,
+    .description2 p,
+    .description3 p {
+        font-size: 16px;
+    }
+
+    .photos img, .videos video {
+        width: 90%;
+    }
+
+    .back-button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}
